@@ -9,4 +9,12 @@ services:
     volumes:
       - ./rabbitmq-config/definitions.json:/etc/rabbitmq/definitions.json:ro
       - ./rabbitmq-config/rabbitmq.config:/etc/rabbitmq/rabbitmq.config:ro
-
+  db:
+    container_name: 'postgres-db-enterprise2'
+    image: postgres:alpine
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_DB=enterprise2exam
+      - POSTGRES_USER=snr1012
+      - POSTGRES_PASSWORD=viking
