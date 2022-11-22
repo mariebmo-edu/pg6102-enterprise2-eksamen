@@ -16,7 +16,6 @@ class OrderEntity(
     @Column(name = "order_id")
     val id: Long? = null,
 
-    @Column(name = "buyer_id")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     val buyer: UserEntity,
