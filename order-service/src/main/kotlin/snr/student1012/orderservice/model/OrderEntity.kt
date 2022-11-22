@@ -16,18 +16,23 @@ class OrderEntity(
     @Column(name = "order_id")
     val id: Long? = null,
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    /*
+    @OneToOne(cascade = [CascadeType.ALL])
+    @JoinColumn(name = "buyer_id", referencedColumnName = "user_id")
     val buyer: UserEntity,
+     */
 
-    @Column(name = "price")
-    val price: Long = 0,
 
-    @Column(name = "order_placed")
-    val orderPlaced: LocalDateTime? = LocalDateTime.now(),
+    @Column(name = "order_total")
+    val orderTotal: Long = 0,
 
+    @Column(name = "order_created")
+    val orderCreated: LocalDateTime? = LocalDateTime.now()
+
+    /*
     @Column(name = "items_in_order")
     @OneToMany
     val itemsInOrder: List<ItemEntity> = listOf()
+     */
 ) {
 }

@@ -16,12 +16,12 @@ class ItemEntity(
     val id: Long? = null,
 
     @Column(name = "item_name")
-    val name: Long? = null,
+    val name: String,
 
     @Column(name = "item_price")
     val price: Long = 0,
 
-    @Column(name = "item_added")
-    val orderPlaced: LocalDateTime? = LocalDateTime.now()
+    @Column(name = "item_created")
+    val created: LocalDateTime? = LocalDateTime.now()
 
 ) {}

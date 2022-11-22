@@ -9,11 +9,11 @@ spring:
     database: postgresql
     show-sql: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   datasource:
-    url: jdbc:postgresql://localhost:5432/orderdb
+    url: 'jdbc:postgresql://localhost:5432/orderdb'
     username: snr1012
     password: viking
