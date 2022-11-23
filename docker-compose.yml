@@ -10,7 +10,7 @@ services:
       - ./rabbitmq-config/definitions.json:/etc/rabbitmq/definitions.json:ro
       - ./rabbitmq-config/rabbitmq.config:/etc/rabbitmq/rabbitmq.config:ro
 
-  orderdb:
+  order-db:
     container_name: 'postgres-db-order'
     image: postgres:alpine
     ports:
@@ -20,91 +20,102 @@ services:
       - POSTGRES_USER=snr1012
       - POSTGRES_PASSWORD=viking
 
-  paymentdb:
+  payment-db:
     container_name: 'postgres-db-payment'
     image: postgres:alpine
     ports:
-      - '5433:5432'
+      - '5433:5433'
     environment:
       - POSTGRES_DB=paymentdb
       - POSTGRES_USER=snr1012
       - POSTGRES_PASSWORD=viking
 
-  shippingdb:
+  shipping-db:
     container_name: 'postgres-db-shipping'
     image: postgres:alpine
     ports:
-      - '5434:5432'
+      - '5434:5434'
     environment:
       - POSTGRES_DB=shippingdb
       - POSTGRES_USER=snr1012
       - POSTGRES_PASSWORD=viking
 
-  orderservice:
+  discovery-service:
+    container_name: 'discovery-service'
+    build:
+      context: discovery-service
+      dockerfile: Dockerfile
+    image: discovery-service:latest
+    environment:
+      eureka.instance.hostname: discovery-service
+      eureka.client.serviceUrl.defaultZone: http://discovery-service:8761/eureka/
+    ports:
+      - "8761:8761"
+
+
+  gateway-service:
+    container_name: 'gateway-service'
+    build:
+      context: gateway-service
+      dockerfile: Dockerfile
+    image: gateway-service:latest
+    environment:
+      eureka.client.serviceUrl.defaultZone: http://discovery-service:8761/eureka/
+    depends_on:
+      - discovery-service
+    ports:
+      - "8080:8080"
+
+  order-service:
     container_name: 'order-service'
     build:
       context: order-service
       dockerfile: Dockerfile
-    image: orderservice:latest
+    image: order-service:latest
     ports:
       - "8081:8081"
     depends_on:
-      - discoveryservice
-      - orderdb
+      - discovery-service
+      - order-db
     environment:
       POSTGRES_JDBC_USER: snr1012
       POSTGRES_JDBC_PASSWORD: viking
-      SPRING_DATASOURCE_URL: "jdbc:postgresql://orderdb:5432/orderdb"
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://order-db:5432/orderdb"
+      eureka.client.serviceUrl.defaultZone: http://discovery-service:8761/eureka/
 
-  paymentservice:
+  payment-service:
     container_name: 'payment-service'
     build:
       context: payment-service
       dockerfile: Dockerfile
-    image: paymentservice:latest
+    image: payment-service:latest
     ports:
       - "8082:8082"
     depends_on:
-      - discoveryservice
-      - paymentdb
+      - discovery-service
+      - payment-db
     environment:
       POSTGRES_JDBC_USER: snr1012
       POSTGRES_JDBC_PASSWORD: viking
-      SPRING_DATASOURCE_URL: "jdbc:postgresql://paymentdb:5433/paymentdb"
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://payment-db:5433/paymentdb"
+      EUREKA_SERVER_URL: "http://discovery-service:8761/eureka"
+      eureka.client.serviceUrl.defaultZone: http://discovery-service:8761/eureka/
 
-  shippingservice:
+  shipping-service:
     container_name: 'shipping-service'
     build:
       context: shipping-service
       dockerfile: Dockerfile
-    image: shippingservice:latest
+    image: shipping-service:latest
     depends_on:
-      - discoveryservice
-      - shippingdb
+      - discovery-service
+      - shipping-db
     ports:
       - "8083:8083"
     environment:
       POSTGRES_JDBC_USER: snr1012
       POSTGRES_JDBC_PASSWORD: viking
-      SPRING_DATASOURCE_URL: "jdbc:postgresql://shippingdb:5434/shippingdb"
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://shipping-db:5434/shippingdb"
+      eureka.client.serviceUrl.defaultZone: http://discovery-service:8761/eureka/
 
-  gatewayservice:
-    container_name: 'gateway-service'
-    build:
-      context: gateway-service
-      dockerfile: Dockerfile
-    image: gatewayservice:latest
-    depends_on:
-      - discoveryservice
 
-    ports:
-      - "8080:8080"
-
-  discoveryservice:
-    container_name: 'discovery-service'
-    build:
-      context: discovery-service
-      dockerfile: Dockerfile
-    image: discoveryservice:latest
-    ports:
-      - "8761:8761"

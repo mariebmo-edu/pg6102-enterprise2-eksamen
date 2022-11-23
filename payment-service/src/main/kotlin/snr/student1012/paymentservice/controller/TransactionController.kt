@@ -1,8 +1,10 @@
 package snr.student1012.paymentservice.controller
 
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
+import snr.student1012.paymentservice.model.TransactionEntity
 import snr.student1012.paymentservice.service.TransactionService
 
 @RestController
@@ -10,7 +12,7 @@ import snr.student1012.paymentservice.service.TransactionService
 class TransactionController(@Autowired private val transactionService: TransactionService) {
 
     @GetMapping("")
-    fun getTransactions() : ResponseEntity<List<TransactionEntity>>{
+    fun getTransactions() : ResponseEntity<List<TransactionEntity>> {
         return ResponseEntity.ok().body(transactionService.getTransactions());
     }
 
@@ -57,12 +59,8 @@ class TransactionController(@Autowired private val transactionService: Transacti
     @DeleteMapping("/{id}")
     fun deleteTransaction(@PathVariable id: Long?) : ResponseEntity<Any>{
         id?.let {
-            transactionService.deleteTransaction(id)?.let {
-                return ResponseEntity.ok().body(it);
-            }.run{
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found");
-            }
+            transactionService.deleteTransaction(id)
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Not found");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad request");
     }
 }

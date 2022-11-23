@@ -2,9 +2,11 @@ package snr.student1012.paymentservice.service
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.findByIdOrNull
+import org.springframework.stereotype.Service
 import snr.student1012.paymentservice.model.TransactionEntity
 import snr.student1012.paymentservice.repository.TransactionRepo
 
+@Service
 class TransactionService(@Autowired private val transactionRepo: TransactionRepo) {
 
     fun getTransactions(): List<TransactionEntity>{
