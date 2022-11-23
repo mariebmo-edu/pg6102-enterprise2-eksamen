@@ -5,7 +5,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "transactions")
-class TransactionEntity(
+class PaymentEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "transactions_transaction_id_seq")
     @SequenceGenerator(

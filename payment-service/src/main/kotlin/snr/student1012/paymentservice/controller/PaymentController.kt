@@ -1,26 +1,27 @@
 package snr.student1012.paymentservice.controller
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import snr.student1012.paymentservice.model.TransactionEntity
-import snr.student1012.paymentservice.service.TransactionService
+import snr.student1012.paymentservice.model.PaymentEntity
+import snr.student1012.paymentservice.service.PaymentService
 
 @RestController
-@RequestMapping("/api/payment/transaction")
-class TransactionController(@Autowired private val transactionService: TransactionService) {
+@RequestMapping("/api/payment")
+class PaymentController(@Autowired private val paymentService: PaymentService) {
 
     @GetMapping("")
-    fun getTransactions() : ResponseEntity<List<TransactionEntity>> {
-        return ResponseEntity.ok().body(transactionService.getTransactions());
+    fun getPayments() : ResponseEntity<List<PaymentEntity>> {
+        return ResponseEntity.ok().body(paymentService.getPayments());
     }
 
     @GetMapping("/{id}")
-    fun getTransactionById(@PathVariable id: Long?) : ResponseEntity<Any>{
+    fun getPaymentById(@PathVariable id: Long?) : ResponseEntity<String>{
         id?.let {
-            transactionService.getTransaction(id)?.let {
-                return ResponseEntity.ok().body(it);
+            paymentService.getPayment(id)?.let {
+                return ResponseEntity.ok().body(it.toString());
             }.run{
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found");
             }
@@ -29,11 +30,12 @@ class TransactionController(@Autowired private val transactionService: Transacti
     }
 
     @PostMapping("")
-    fun registerTransaction(@RequestBody transactionEntity: TransactionEntity?): ResponseEntity<Any>{
-        when(transactionEntity){
+    fun registerPayment(@RequestBody paymentEntity: PaymentEntity?): ResponseEntity<Any>{
+        when(paymentEntity){
             null -> return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request");
             else -> {
-                transactionService.registerTransaction(transactionEntity)?.let {
+                paymentService.registerPayment(paymentEntity)?.let {
+                    val mapper = jacksonObjectMapper()
                     return ResponseEntity.ok().body(it);
                 }.run{
                     return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found");
@@ -43,11 +45,11 @@ class TransactionController(@Autowired private val transactionService: Transacti
     }
 
     @PutMapping("")
-    fun updateTransaction(@RequestBody transactionEntity: TransactionEntity?): ResponseEntity<Any>{
-        when(transactionEntity){
+    fun updatePayment(@RequestBody paymentEntity: PaymentEntity?): ResponseEntity<Any>{
+        when(paymentEntity){
             null -> return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request");
             else -> {
-                transactionService.updateTransaction(transactionEntity)?.let {
+                paymentService.updatePayment(paymentEntity)?.let {
                     return ResponseEntity.ok().body(it);
                 }.run{
                     return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found");
@@ -57,9 +59,9 @@ class TransactionController(@Autowired private val transactionService: Transacti
     }
 
     @DeleteMapping("/{id}")
-    fun deleteTransaction(@PathVariable id: Long?) : ResponseEntity<Any>{
+    fun deletePayment(@PathVariable id: Long?) : ResponseEntity<Any>{
         id?.let {
-            transactionService.deleteTransaction(id)
+            paymentService.deletePayment(id)
             return ResponseEntity.ok().body("Deleted");
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad request");

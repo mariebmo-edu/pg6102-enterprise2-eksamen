@@ -1,19 +1,43 @@
 package snr.student1012.orderservice.integration
 
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.ResponseEntity
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
-import org.springframework.web.client.getForEntity
+import snr.student1012.orderservice.dto.PaymentDto
+import snr.student1012.orderservice.model.OrderEntity
+import java.time.LocalDateTime
 
 @Service
 class PaymentIntegrationService(@Autowired private val restTemplate: RestTemplate) {
 
     val paymentUrl = "http://payment-service/api/payment";
+    //val paymentUrl = "http://localhost:8080/api/payment";
 
-    fun sendHttpCallToPaymentService(id: Long): ResponseEntity<Any> {
-        val response: ResponseEntity<Any> = restTemplate.getForEntity("$paymentUrl/transaction/$id", ResponseEntity::class);
-        println("response from payment service: ${response.body}");
-        return response;
+    fun sendOrderToPaymentService(orderEntity: OrderEntity) : OrderEntity? {
+        orderEntity.id?.let {
+            val paymentDto = PaymentDto(
+                id = null,
+                orderId = orderEntity.id,
+                amount = orderEntity.amount,
+                created = LocalDateTime.now(),
+                complete = null
+            )
+
+            try{
+                val response = restTemplate.postForEntity(paymentUrl, paymentDto, PaymentDto::class.java);
+                val returnedPaymentDto = response.body;
+                returnedPaymentDto?.let {
+                    orderEntity.paymentStatus = "Payment complete";
+                    return orderEntity;
+                }
+            }catch (e: Exception){
+                println(e);
+            }
+        }
+
+        return null
     }
+
+
 }

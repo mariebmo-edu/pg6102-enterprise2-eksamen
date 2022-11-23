@@ -5,6 +5,7 @@ import org.springframework.boot.runApplication
 import org.springframework.cloud.client.loadbalancer.LoadBalanced
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient
 import org.springframework.context.annotation.Bean
+import org.springframework.http.client.SimpleClientHttpRequestFactory
 import org.springframework.web.client.RestTemplate
 
 @SpringBootApplication
@@ -13,7 +14,9 @@ class OrderServiceApplication{
     @Bean
     @LoadBalanced
     fun restTemplate(): RestTemplate? {
-        return RestTemplate()
+        val requestFactory = SimpleClientHttpRequestFactory();
+        requestFactory.setReadTimeout(10_000)
+        return RestTemplate(requestFactory)
     }
 
 }

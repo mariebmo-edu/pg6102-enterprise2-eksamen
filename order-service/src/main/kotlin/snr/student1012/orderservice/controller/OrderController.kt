@@ -39,7 +39,13 @@ class OrderController(
             null -> return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Reqsssuest");
             else -> {
                 orderService.registerOrder(orderEntity)?.let {
-                    return ResponseEntity.ok().body(it);
+                    paymentIntegrationService.sendOrderToPaymentService(it)?.let {
+                        orderService.updateOrder(it)
+                        //rabbitSender.sendOrderToShippingService(it);
+                        return ResponseEntity.ok().body(it);
+                    }.run{
+                        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found");
+                    }
                 }.run{
                     return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found");
                 }
@@ -69,14 +75,5 @@ class OrderController(
             }.run{
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Not found");
         }
-    }
-
-    @GetMapping("/{id}/payment")
-    fun registerToPayment(@PathVariable id: Long?): ResponseEntity<Any>{
-        id?.let {
-            return paymentIntegrationService.sendHttpCallToPaymentService(it);
-        }
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Not found");
     }
 }
