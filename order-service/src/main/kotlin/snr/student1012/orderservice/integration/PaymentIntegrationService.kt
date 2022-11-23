@@ -11,8 +11,8 @@ class PaymentIntegrationService(@Autowired private val restTemplate: RestTemplat
 
     val paymentUrl = "http://payment-service/api/payment";
 
-    fun sendHttpCallToPaymentService(id: Long): ResponseEntity<String> {
-        val response: ResponseEntity<String> = restTemplate.getForEntity("$paymentUrl/transaction/$id", ResponseEntity::class);
+    fun sendHttpCallToPaymentService(id: Long): ResponseEntity<Any> {
+        val response: ResponseEntity<Any> = restTemplate.getForEntity("$paymentUrl/transaction/$id", ResponseEntity::class);
         println("response from payment service: ${response.body}");
         return response;
     }

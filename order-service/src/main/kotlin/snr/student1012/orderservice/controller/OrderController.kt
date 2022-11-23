@@ -5,12 +5,16 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import snr.student1012.orderservice.integration.PaymentIntegrationService
+import snr.student1012.orderservice.integration.RabbitSender
 import snr.student1012.orderservice.model.OrderEntity
 import snr.student1012.orderservice.service.OrderService
 
 @RestController
 @RequestMapping("/api/order")
-class OrderController(@Autowired private val orderService: OrderService, @Autowired private val paymentIntegrationService: PaymentIntegrationService){
+class OrderController(
+    @Autowired private val orderService: OrderService,
+    @Autowired private val paymentIntegrationService: PaymentIntegrationService,
+    @Autowired private val rabbitSender: RabbitSender) {
 
     @GetMapping("")
     fun getOrders() : ResponseEntity<List<OrderEntity>> {
@@ -46,7 +50,7 @@ class OrderController(@Autowired private val orderService: OrderService, @Autowi
     @GetMapping("/{id}/payment")
     fun registerToPayment(@PathVariable id: Long?): ResponseEntity<Any>{
         id?.let {
-            paymentIntegrationService.sendHttpCallToPaymentService(it);
+            return paymentIntegrationService.sendHttpCallToPaymentService(it);
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Not found");

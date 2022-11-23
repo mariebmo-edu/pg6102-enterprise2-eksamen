@@ -16,29 +16,22 @@ class OrderEntity(
     @Column(name = "order_id")
     val id: Long? = null,
 
-    /*
-    @OneToOne(cascade = [CascadeType.ALL])
-    @JoinColumn(name = "buyer_id", referencedColumnName = "user_id")
-    val buyer: UserEntity,
-     */
+    @Column(name = "user_id")
+    val userId: Long,
 
-    @Column(name="order_paid")
-    val orderPaid: Boolean = false,
+    @Column(name = "status")
+    val status: String,
 
-    @Column(name="order_shipped")
-    val orderShipped: Boolean = false,
+    @Column(name = "amount")
+    val amount: Double,
 
+    @Column(name = "currency")
+    val currency: String = "NOK",
 
-    @Column(name = "order_total")
-    val orderTotal: Long = 0,
+    @Column(name = "description")
+    val description: String? = null,
 
-    @Column(name = "order_created")
-    val orderCreated: LocalDateTime = LocalDateTime.now()
-
-    /*
-    @Column(name = "items_in_order")
-    @OneToMany
-    val itemsInOrder: List<ItemEntity> = listOf()
-     */
+    @Column(name = "created_at")
+    val createdAt: LocalDateTime = LocalDateTime.now()
 ) {
 }

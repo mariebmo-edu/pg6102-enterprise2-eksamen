@@ -1,4 +1,4 @@
-package snr.student1012.orderservice.integration
+package snr.student1012.paymentservice.integration
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.beans.factory.annotation.Autowired
