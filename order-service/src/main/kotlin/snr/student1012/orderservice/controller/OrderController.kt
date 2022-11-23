@@ -41,7 +41,7 @@ class OrderController(
                 orderService.registerOrder(orderEntity)?.let {
                     paymentIntegrationService.sendOrderToPaymentService(it)?.let {
                         orderService.updateOrder(it)
-                        //rabbitSender.sendOrderToShippingService(it);
+                        rabbitSender.sendOrderToShippingService(it.id!!);
                         return ResponseEntity.ok().body(it);
                     }.run{
                         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found");

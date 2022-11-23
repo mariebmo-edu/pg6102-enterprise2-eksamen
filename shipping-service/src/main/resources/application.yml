@@ -3,6 +3,9 @@ server:
 spring:
   rabbitmq:
     host: localhost
+    listener:
+      simple:
+        default-requeue-rejected: false
   application:
     name: shipping-service
   jpa:
