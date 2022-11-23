@@ -19,26 +19,29 @@ services:
       - POSTGRES_DB=orderdb
       - POSTGRES_USER=snr1012
       - POSTGRES_PASSWORD=viking
+      - POSTGRES_PORT=5432
 
   payment-db:
     container_name: 'postgres-db-payment'
     image: postgres:alpine
     ports:
-      - '5433:5433'
+      - '5433:5432'
     environment:
       - POSTGRES_DB=paymentdb
       - POSTGRES_USER=snr1012
       - POSTGRES_PASSWORD=viking
+      - POSTGRES_PORT=5433
 
   shipping-db:
     container_name: 'postgres-db-shipping'
     image: postgres:alpine
     ports:
-      - '5434:5434'
+      - '5434:5432'
     environment:
       - POSTGRES_DB=shippingdb
       - POSTGRES_USER=snr1012
       - POSTGRES_PASSWORD=viking
+      - POSTGRES_PORT=5434
 
   discovery-service:
     container_name: 'discovery-service'
@@ -97,7 +100,7 @@ services:
     environment:
       POSTGRES_JDBC_USER: snr1012
       POSTGRES_JDBC_PASSWORD: viking
-      SPRING_DATASOURCE_URL: "jdbc:postgresql://payment-db:5433/paymentdb"
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://payment-db:5432/paymentdb"
       EUREKA_SERVER_URL: "http://discovery-service:8761/eureka"
       eureka.client.serviceUrl.defaultZone: http://discovery-service:8761/eureka/
 
@@ -115,7 +118,7 @@ services:
     environment:
       POSTGRES_JDBC_USER: snr1012
       POSTGRES_JDBC_PASSWORD: viking
-      SPRING_DATASOURCE_URL: "jdbc:postgresql://shipping-db:5434/shippingdb"
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://shipping-db:5432/shippingdb"
       eureka.client.serviceUrl.defaultZone: http://discovery-service:8761/eureka/
 
 
