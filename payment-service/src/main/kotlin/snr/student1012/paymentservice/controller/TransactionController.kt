@@ -60,6 +60,7 @@ class TransactionController(@Autowired private val transactionService: Transacti
     fun deleteTransaction(@PathVariable id: Long?) : ResponseEntity<Any>{
         id?.let {
             transactionService.deleteTransaction(id)
+            return ResponseEntity.ok().body("Deleted");
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad request");
     }

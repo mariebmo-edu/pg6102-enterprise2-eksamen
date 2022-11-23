@@ -20,4 +20,12 @@ class OrderService(@Autowired private val orderRepo: OrderRepo) {
     fun registerOrder(orderEntity: OrderEntity) : Long?{
         return orderRepo.save(orderEntity).id;
     }
+
+    fun updateOrder(orderEntity: OrderEntity) : Long?{
+        return orderRepo.save(orderEntity).id;
+    }
+
+    fun deleteOrder(id: Long) {
+        orderRepo.deleteById(id);
+    }
 }

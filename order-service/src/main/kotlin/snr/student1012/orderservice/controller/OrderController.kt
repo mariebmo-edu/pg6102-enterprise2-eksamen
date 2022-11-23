@@ -47,6 +47,30 @@ class OrderController(
         }
     }
 
+    @PutMapping("")
+    fun updateOrder(@RequestBody orderEntity: OrderEntity?): ResponseEntity<Any> {
+        when(orderEntity){
+            null -> return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request");
+            else -> {
+                orderService.updateOrder(orderEntity)?.let {
+                    return ResponseEntity.ok().body(it);
+                }.run{
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found");
+                }
+            }
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    fun deleteOrder(@PathVariable id: Long?) : ResponseEntity<Any> {
+        id?.let {
+            orderService.deleteOrder(id)
+            return ResponseEntity.ok().body("Deleted");
+            }.run{
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Not found");
+        }
+    }
+
     @GetMapping("/{id}/payment")
     fun registerToPayment(@PathVariable id: Long?): ResponseEntity<Any>{
         id?.let {

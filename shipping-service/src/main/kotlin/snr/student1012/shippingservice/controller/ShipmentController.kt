@@ -42,5 +42,28 @@ class ShipmentController(@Autowired private val shipmentService: ShipmentService
         }
     }
 
+    @PutMapping("")
+    fun updateShipment(@RequestBody shipmentEntity: ShipmentEntity?): ResponseEntity<Any>{
+        when(shipmentEntity){
+            null -> return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request");
+            else -> {
+                shipmentService.updateShipment(shipmentEntity)?.let {
+                    return ResponseEntity.ok().body(it);
+                }.run{
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found");
+                }
+            }
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    fun deleteShipment(@PathVariable id: Long?) : ResponseEntity<Any>{
+        id?.let {
+            shipmentService.deleteShipment(id)
+            return ResponseEntity.ok().body("Deleted");
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request");
+    }
+
 
 }
