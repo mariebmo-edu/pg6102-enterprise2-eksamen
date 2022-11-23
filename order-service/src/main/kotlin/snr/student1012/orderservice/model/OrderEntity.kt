@@ -22,12 +22,18 @@ class OrderEntity(
     val buyer: UserEntity,
      */
 
+    @Column(name="order_paid")
+    val orderPaid: Boolean = false,
+
+    @Column(name="order_shipped")
+    val orderShipped: Boolean = false,
+
 
     @Column(name = "order_total")
     val orderTotal: Long = 0,
 
     @Column(name = "order_created")
-    val orderCreated: LocalDateTime? = LocalDateTime.now()
+    val orderCreated: LocalDateTime = LocalDateTime.now()
 
     /*
     @Column(name = "items_in_order")

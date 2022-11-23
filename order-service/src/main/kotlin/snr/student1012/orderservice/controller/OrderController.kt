@@ -30,7 +30,6 @@ class OrderController(@Autowired private val orderService: OrderService) {
 
     @PostMapping("")
     fun registerOrder(@RequestBody orderEntity: OrderEntity?): ResponseEntity<Any> {
-        println("REGISTERING")
         when(orderEntity){
             null -> return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Reqsssuest");
             else -> {

@@ -1,4 +1,4 @@
-package nr.student1012.paymentservice
+package snr.student1012.paymentservice
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
