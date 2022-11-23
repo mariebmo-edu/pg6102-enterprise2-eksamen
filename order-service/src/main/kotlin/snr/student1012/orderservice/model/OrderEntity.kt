@@ -20,7 +20,7 @@ class OrderEntity(
     val userId: Long,
 
     @Column(name = "status")
-    val status: String = "CREATED",
+    var status: String = "CREATED",
 
     @Column(name = "payment_status")
     var paymentStatus: String = "PENDING",

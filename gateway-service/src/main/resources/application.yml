@@ -3,11 +3,11 @@ spring:
     name: gateway-service
   cloud:
     gateway:
-      ##breaks local gateway
-      #discovery:
-       # locator:
-        #  enabled: true
-         # lower-case-service-id: true
+      ## breaks local gateway
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
       routes:
         - id: order-service
           uri: lb://order-service
