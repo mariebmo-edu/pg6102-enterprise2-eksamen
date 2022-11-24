@@ -7,7 +7,7 @@ Eksamensrepo for PG6102, Enterprise 2
 - [x] Shipping-Service
 - [x] REST-Endpoints with ResponseEntities
 - [x] docker-compose.yml with databases + rabbitmq
-- [ ] tests
+- [x] tests
 
 ***Comments***
 I had -a lot- of issues with libraries in the project. Neither MockMvn nor WireMock wanted to play along, and refused to be implemented. I've tried to make some "dummy" requests (that isn't working on my end due to MockMvc/Wiremock), but hopefully they'll give some impression that I have some idea of how they should be implemented. I was not able to test them, so they might be wrong.
