@@ -1,4 +1,4 @@
-package snr.student1012.orderservice.integrationtests
+package snr.student1012.orderservice.integrationtest
 
 import org.json.JSONObject
 import org.junit.jupiter.api.MethodOrderer

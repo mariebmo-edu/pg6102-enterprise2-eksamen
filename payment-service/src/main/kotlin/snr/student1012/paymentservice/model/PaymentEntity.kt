@@ -20,7 +20,7 @@ class PaymentEntity(
     val orderId: Long? = null,
 
     @Column(name = "payment_amount")
-    val amount: Double? = 0.0,
+    var amount: Double? = 0.0,
 
     @Column(name = "payment_created_at")
     val created: LocalDateTime? = LocalDateTime.now(),
