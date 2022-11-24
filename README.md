@@ -27,7 +27,7 @@ I have the same issue with RabbitMq as with MockMc and Wiremock, not being able 
 
 **Minimum for C**
 - [x] Gateway-Service on port 8080
-- [ ] Caching
+- [x] Caching
 
 ***Comments***
 
