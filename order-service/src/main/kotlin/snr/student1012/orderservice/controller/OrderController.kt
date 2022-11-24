@@ -4,6 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import snr.student1012.orderservice.exception.EntityNotCreatedException
+import snr.student1012.orderservice.exception.BadRequestException
+import snr.student1012.orderservice.exception.EntityNotFoundException
+import snr.student1012.orderservice.exception.EntityNotUpdatedException
 import snr.student1012.orderservice.integration.PaymentIntegrationService
 import snr.student1012.orderservice.integration.RabbitSender
 import snr.student1012.orderservice.model.OrderEntity
@@ -27,16 +31,16 @@ class OrderController(
             orderService.getOrder(id)?.let {
                 return ResponseEntity.ok().body(it);
             }.run{
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found");
+                throw EntityNotFoundException("Order with id $id not found");
             }
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Not found");
+        throw BadRequestException("Id is null");
     }
 
     @PostMapping("")
     fun registerOrder(@RequestBody orderEntity: OrderEntity?): ResponseEntity<Any> {
         when(orderEntity){
-            null -> return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Reqsssuest");
+            null -> throw BadRequestException("Order is null")
             else -> {
                 orderService.registerOrder(orderEntity)?.let {
                     paymentIntegrationService.sendOrderToPaymentService(it)?.let {
@@ -44,10 +48,10 @@ class OrderController(
                         rabbitSender.sendOrderToShippingService(it);
                         return ResponseEntity.ok().body(it);
                     }.run{
-                        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found");
+                        throw EntityNotCreatedException("Payment not created");
                     }
                 }.run{
-                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found");
+                    throw EntityNotCreatedException("Order not created");
                 }
             }
         }
@@ -56,12 +60,12 @@ class OrderController(
     @PutMapping("")
     fun updateOrder(@RequestBody orderEntity: OrderEntity?): ResponseEntity<Any> {
         when(orderEntity){
-            null -> return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request");
+            null -> throw BadRequestException("Order is null")
             else -> {
                 orderService.updateOrder(orderEntity)?.let {
                     return ResponseEntity.ok().body(it);
                 }.run{
-                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found");
+                    throw EntityNotUpdatedException("Error updating order");
                 }
             }
         }

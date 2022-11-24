@@ -3,7 +3,6 @@ spring:
     name: gateway-service
   cloud:
     gateway:
-      ## breaks local gateway
       discovery:
         locator:
           enabled: true
@@ -13,14 +12,29 @@ spring:
           uri: lb://order-service
           predicates:
             - Path=/api/order/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: orderCircuitBreaker
+                fallbackUri: forward:/order-fallback
         - id: payment-service
           uri: lb://payment-service
           predicates:
             - Path=/api/payment/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: paymentCircuitBreaker
+                fallbackUri: forward:/payment-fallback
         - id: shipping-service
           uri: lb://shipping-service
           predicates:
             - Path=/api/shipping/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: shippingCircuitBreaker
+                fallbackUri: forward:/shipping-fallback
 server:
   port: 8080
 

@@ -1,20 +1,22 @@
 package snr.student1012.paymentservice.model
 
+import org.jetbrains.annotations.NotNull
 import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
-@Table(name = "transactions")
+@Table(name = "payments")
 class PaymentEntity(
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "transactions_transaction_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "payments_payment_id_seq")
     @SequenceGenerator(
-        name = "transactions_transaction_id_seq",
+        name = "payments_payment_id_seq",
         allocationSize = 1
     )
-    @Column(name = "transaction_id")
+    @Column(name = "payment_id")
     val id: Long? = null,
 
+    @NotNull
     @Column(name = "order_id")
     val orderId: Long? = null,
 

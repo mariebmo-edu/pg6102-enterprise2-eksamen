@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import snr.student1012.shippingservice.exception.BadRequestException
+import snr.student1012.shippingservice.exception.EntityNotFoundException
 import snr.student1012.shippingservice.model.ShipmentEntity
 import snr.student1012.shippingservice.service.ShipmentService
 
@@ -22,21 +24,21 @@ class ShipmentController(@Autowired private val shipmentService: ShipmentService
             shipmentService.getShipment(id)?.let {
                 return ResponseEntity.ok().body(it);
             }.run{
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found");
+                throw EntityNotFoundException("Shipment with id $id not found")
             }
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Not found");
+        throw BadRequestException("Id is null")
     }
 
     @PostMapping("")
     fun registerShipment(@RequestBody shipmentEntity: ShipmentEntity?): ResponseEntity<Any>{
         when(shipmentEntity){
-            null -> return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request");
+            null -> throw BadRequestException("Shipment is null")
             else -> {
                 shipmentService.registerShipment(shipmentEntity)?.let {
                     return ResponseEntity.ok().body(it);
                 }.run{
-                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found");
+                    throw EntityNotFoundException("Shipment not created")
                 }
             }
         }
@@ -45,12 +47,12 @@ class ShipmentController(@Autowired private val shipmentService: ShipmentService
     @PutMapping("")
     fun updateShipment(@RequestBody shipmentEntity: ShipmentEntity?): ResponseEntity<Any>{
         when(shipmentEntity){
-            null -> return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request");
+            null -> throw BadRequestException("Shipment is null")
             else -> {
                 shipmentService.updateShipment(shipmentEntity)?.let {
                     return ResponseEntity.ok().body(it);
                 }.run{
-                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found");
+                    throw EntityNotFoundException("Shipment not updated")
                 }
             }
         }
@@ -62,7 +64,7 @@ class ShipmentController(@Autowired private val shipmentService: ShipmentService
             shipmentService.deleteShipment(id)
             return ResponseEntity.ok().body("Deleted");
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request");
+        throw BadRequestException("Id is null")
     }
 
 
