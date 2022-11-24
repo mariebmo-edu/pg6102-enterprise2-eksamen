@@ -5,16 +5,15 @@ Eksamensrepo for PG6102, Enterprise 2
 
 Hi Jason! 
 
-I got so far, but in the end, the tests defeated me.
+I got so far, but in the end, the tests defeated me. If I had another day or week, I'm sure I would've managed to get everything up and running.
 
 I've had a lot of issues with the different services not wanting to recognize the dependencies, and I've spend hours (and days) trying out different versions,
-methods, and approaches. I've tried to use the same versions as you, I've also tried to use the latest versions of everything, adding and removing stuff.
-Every time I came one step closer, something else broke.
+methods, and approaches. I've tried to use the same versions as you, I've tried to use the latest versions of everything, I've tried adding and removing stuff.
+Every time I came one step closer, something else broke - mainly with test-related stuff. I believe I spent about 99% fixing errors, and 1% writing code, and I must admit it wore me down having to work on a tight deadline and feeling that nothing is going the way I wanted to.
 
-I got all the other things to work (services, communication, rabbitmq, pagination, caching etc.). I had major issues where MockMvc refused to Autowire into tests, making it impossible to
-do any smart integration tests. I tried to make some dummy-tests, but I'm not sure if they work or not, as I'm not able to run them. I got the integration tests against
-the database to work just fine. After two days of trying to get the tests to work, I had to focus on the implementation of the software. Hopefully what I've done is
-enought to get some idea of what I wanted to accomplish, but I must admit that I'm disappointed that I wasn't able to get everything to work the way I hoped.
+BUT! I got all the other things to work (services, communication, rabbitmq, pagination, caching etc.), except for circuit breaker. I had major issues where MockMvc refused to Autowire into tests, making it impossible to do any smart integration tests. I tried to make some dummy-tests, butas I'm not able to run them, I'm not sure if they would've worked or not.
+
+I got the integration tests against the database to work just fine, except for the Shipment-service, which didn't like being wired with RabbitListener. After two days of trying to get the tests to work, I had to focus on the implementation of the software. Hopefully what I've done is enought to get some idea of what I wanted to accomplish and see I understand most of the corriculum from the course, and could figure out the rest with a bit more time, but I must admit that I'm disappointed that I wasn't able to get everything to work the way I hoped.
 
 I hope it's not too much of a hassle looking through the code to get an overview of how it works - I promise it 100% works 98% of the time! 
 
