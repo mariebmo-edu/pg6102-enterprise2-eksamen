@@ -19,10 +19,18 @@ I've attached the postman-collection, so you can give it a go with the best kind
 
 Merry Christmas! 
 
+## Assignment
+
+In brief explanation, the service(s) work by sending a request to order, when the order is created, it'll send a http request to the payment-service.
+
+- When the payment-service gets the post-request, it'll create a transaction(payment), and return the paymentDto. The order will in turn be updated to the payment-status.
+- When the payment is complete, a rabbitmq-request is sent from the order to the shipping, which in turn picks up the request, and creates a shipment
+- When the shipment is in progress, it'll send a rabbitmq-request back to order, which in turn updates the shipping status.
+
 ## Known quirks
 - rabbitmq is currently running on localhost. If you want it to run on docker instead, change order-service and shipment-service's yml from localhost to rabbit-mq
-- tests don't work. the libraries just didn't want them to, I'm sorry
-- a lot of the code is written for demoing different skills, and are most likely not best practise in any way, shape, or form. 
+- tests don't work. I had so many issues with WireMock, MockMvC, and mockk, making it impossible to do any testing. I tried for days.
+- a lot of the code is written for demonstrating different skills, and are most likely not best practise in any way, shape, or form. 
 
 ## Criteria
 
