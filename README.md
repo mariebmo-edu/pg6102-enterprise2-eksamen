@@ -33,7 +33,7 @@ I have the same issue with RabbitMq as with MockMc and Wiremock, not being able 
 
 **Minimum for B**
 - [x] Discovery-Service w/Eureka
-- [ ] Pagination for Queries
+- [x] Pagination for Queries
 
 ***Comments***
 
