@@ -19,22 +19,25 @@ class OrderEntity(
     @Column(name = "user_id")
     val userId: Long,
 
-    @Column(name = "status")
-    var status: String = "CREATED",
+    @Column(name = "order_shipping_status")
+    var shippingStatus: String = "CREATED",
 
-    @Column(name = "payment_status")
+    @Column(name = "order_payment_status")
     var paymentStatus: String = "PENDING",
 
-    @Column(name = "amount")
+    @Column(name = "order_amount")
     val amount: Double,
 
-    @Column(name = "currency")
+    @Column(name = "order_currency")
     val currency: String = "NOK",
 
-    @Column(name = "description")
+    @Column(name = "order_description")
     val description: String? = null,
 
-    @Column(name = "created_at")
-    val createdAt: LocalDateTime = LocalDateTime.now()
+    @Column(name = "order_created_at")
+    val createdAt: LocalDateTime = LocalDateTime.now(),
+
+    @Column(name = "order_updated_at")
+    var updatedAt: LocalDateTime = LocalDateTime.now()
 ) {
 }

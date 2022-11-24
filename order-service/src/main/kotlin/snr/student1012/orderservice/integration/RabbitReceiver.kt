@@ -19,7 +19,7 @@ class RabbitReceiver(@Autowired private val orderService: OrderService) {
             var order = orderService.getOrder(id);
 
             order?.let {
-                order.status = "Shipped";
+                order.shippingStatus = "Shipped";
                 orderService.updateOrder(order)
             }
         }

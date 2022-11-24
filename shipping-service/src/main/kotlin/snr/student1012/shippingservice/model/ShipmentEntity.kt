@@ -1,5 +1,6 @@
 package snr.student1012.shippingservice.model
 
+import org.jetbrains.annotations.NotNull
 import java.time.LocalDateTime
 import javax.persistence.*
 
@@ -18,8 +19,11 @@ class ShipmentEntity(
     @Column(name = "order_id")
     val orderId: Long? = null,
 
-    @Column(name = "shipment_created")
+    @Column(name = "shipment_created_at")
     val created: LocalDateTime = LocalDateTime.now(),
+
+    @Column(name = "shipment_updated_at")
+    val updated: LocalDateTime= LocalDateTime.now(),
 
     @Column(name = "shipment_status")
     val status: String = "CREATED",

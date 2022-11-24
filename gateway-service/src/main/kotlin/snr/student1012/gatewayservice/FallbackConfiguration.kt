@@ -1,5 +1,6 @@
 package snr.student1012.gatewayservice
 
+/*
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.reactive.function.server.*
@@ -30,3 +31,5 @@ class FallbackConfiguration {
         return ServerResponse.ok().body("Order service is not available", String::class.java)
     }
 }
+
+ */

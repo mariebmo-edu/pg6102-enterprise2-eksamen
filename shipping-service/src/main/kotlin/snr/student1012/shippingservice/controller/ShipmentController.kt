@@ -10,7 +10,7 @@ import snr.student1012.shippingservice.model.ShipmentEntity
 import snr.student1012.shippingservice.service.ShipmentService
 
 @RestController
-@RequestMapping("/api/shipping")
+@RequestMapping("/api/shipment")
 class ShipmentController(@Autowired private val shipmentService: ShipmentService) {
 
     @GetMapping("")

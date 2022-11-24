@@ -16,14 +16,19 @@ class PaymentEntity(
     @Column(name = "payment_id")
     val id: Long? = null,
 
-    @NotNull
     @Column(name = "order_id")
     val orderId: Long? = null,
 
-    @Column(name = "transaction_created")
+    @Column(name = "payment_amount")
+    val amount: Double? = 0.0,
+
+    @Column(name = "payment_created_at")
     val created: LocalDateTime = LocalDateTime.now(),
 
-    @Column(name = "transaction_complete")
-    val complete: LocalDateTime? = null
+    @Column(name = "payment_updated_at")
+    val complete: LocalDateTime= LocalDateTime.now(),
+
+    @Column(name = "payment_status")
+    val status: String = "COMPLETE",
 ) {
 }
