@@ -9,7 +9,7 @@ I've had a lot of issues with the different services not wanting to recognize th
 methods, and approaches. I've tried to use the same versions as you, I've tried to use the latest versions of everything, I've tried adding and removing stuff.
 Every time I came one step closer, something else broke - mainly with test-related stuff. I believe I spent about 99% fixing errors, and 1% writing code, and I must admit it wore me down having to work on a tight deadline and feeling that nothing is going the way I wanted to.
 
-BUT! I got all the other things to work (services, communication, rabbitmq, pagination, caching etc.), except for circuit breaker. I had major issues where MockMvc refused to Autowire into tests, making it impossible to do any smart integration tests. I tried to make some dummy-tests, butas I'm not able to run them, I'm not sure if they would've worked or not.
+**BUT!** I got all the other things to work (services, communication, rabbitmq, pagination, caching etc.), except for circuit breaker. I had major issues where MockMvc refused to Autowire into tests, making it impossible to do any smart integration tests. I tried to make some dummy-tests, butas I'm not able to run them, I'm not sure if they would've worked or not.
 
 I got the integration tests against the database to work just fine, except for the Shipment-service, which didn't like being wired with RabbitListener. After two days of trying to get the tests to work, I had to focus on the implementation of the software. Hopefully what I've done is enought to get some idea of what I wanted to accomplish and see I understand most of the corriculum from the course, and could figure out the rest with a bit more time, but I must admit that I'm disappointed that I wasn't able to get everything to work the way I hoped.
 
@@ -23,7 +23,6 @@ Merry Christmas!
 - rabbitmq is currently running on localhost. If you want it to run on docker instead, change order-service and shipment-service's yml from localhost to rabbit-mq
 - tests don't work. the libraries just didn't want them to, I'm sorry
 - a lot of the code is written for demoing different skills, and are most likely not best practise in any way, shape, or form. 
-- 
 
 ## Criteria
 
