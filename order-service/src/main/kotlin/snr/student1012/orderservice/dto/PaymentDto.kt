@@ -7,5 +7,6 @@ data class PaymentDto (
     val orderId: Long,
     val amount: Double,
     val created: LocalDateTime?,
-    val complete: LocalDateTime?
+    val updated: LocalDateTime?,
+    val status: String
     )

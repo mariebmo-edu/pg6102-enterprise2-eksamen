@@ -16,7 +16,7 @@ import java.time.LocalDateTime
 @Service
 class PaymentIntegrationService(@Autowired private val restTemplate: RestTemplate) {
 
-    val logger: Logger = LoggerFactory.getLogger(PaymentIntegrationService::class.java)
+    //val paymentUrl = "http://payment-service/api/payment";
     val paymentUrl = "http://payment-service/api/payment";
 
     fun sendOrderToPaymentService(orderEntity: OrderEntity) : OrderEntity? {
@@ -26,18 +26,20 @@ class PaymentIntegrationService(@Autowired private val restTemplate: RestTemplat
                 orderId = orderEntity.id,
                 amount = orderEntity.amount,
                 created = LocalDateTime.now(),
-                complete = null
+                updated = null,
+                status = "PENDING"
             )
 
             try{
                 val response = restTemplate.postForEntity(paymentUrl, paymentDto, PaymentDto::class.java);
                 val returnedPaymentDto = response.body;
                 returnedPaymentDto?.let {
-                    orderEntity.paymentStatus = "Payment complete";
+                    orderEntity.paymentStatus = "PAID";
+                    orderEntity.updatedAt = LocalDateTime.now();
                     return orderEntity;
                 }
             }catch (e: Exception){
-                println(e);
+                throw ServiceInterruptionException("Payment service is not available");
             }
         }
         return null

@@ -17,7 +17,7 @@ class OrderEntity(
     val id: Long? = null,
 
     @Column(name = "user_id")
-    val userId: Long,
+    val userId: Long? = null,
 
     @Column(name = "order_shipping_status")
     var shippingStatus: String = "CREATED",
