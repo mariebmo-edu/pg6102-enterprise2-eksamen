@@ -10,6 +10,9 @@ Eksamensrepo for PG6102, Enterprise 2
 - [ ] tests
 
 ***Comments***
+![image](https://user-images.githubusercontent.com/23049454/203850306-09a6e84f-7f72-4bff-9286-a8adf55538fe.png)
+No matter what I've tried, I can't get MockMvc to work. I've added all the neccessary dependencies, and "normal" tests works fine. 
+
 
 **Minimum for D**
 - [x] Order -> Shipping communication with RabbitMq
