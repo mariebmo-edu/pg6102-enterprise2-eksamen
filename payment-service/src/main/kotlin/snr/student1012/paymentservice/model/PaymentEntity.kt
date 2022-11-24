@@ -23,12 +23,12 @@ class PaymentEntity(
     val amount: Double? = 0.0,
 
     @Column(name = "payment_created_at")
-    val created: LocalDateTime = LocalDateTime.now(),
+    val created: LocalDateTime? = LocalDateTime.now(),
 
     @Column(name = "payment_updated_at")
-    val updated: LocalDateTime= LocalDateTime.now(),
+    val updated: LocalDateTime? = LocalDateTime.now(),
 
     @Column(name = "payment_status")
-    val status: String = "PENDING"
+    val status: String = "COMPLETE"
 ) {
 }

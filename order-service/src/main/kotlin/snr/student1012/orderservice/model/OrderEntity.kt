@@ -32,7 +32,7 @@ class OrderEntity(
     val currency: String = "NOK",
 
     @Column(name = "order_description")
-    val description: String? = null,
+    var description: String? = null,
 
     @Column(name = "order_created_at")
     val createdAt: LocalDateTime = LocalDateTime.now(),

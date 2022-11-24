@@ -21,8 +21,8 @@ class OrderService(@Autowired private val orderRepo: OrderRepo) {
         return orderRepo.save(orderEntity);
     }
 
-    fun updateOrder(orderEntity: OrderEntity) : Long?{
-        return orderRepo.save(orderEntity).id;
+    fun updateOrder(orderEntity: OrderEntity) : OrderEntity?{
+        return orderRepo.save(orderEntity);
     }
 
     fun deleteOrder(id: Long) {
