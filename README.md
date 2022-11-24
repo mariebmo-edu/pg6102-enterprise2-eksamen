@@ -3,8 +3,6 @@ Eksamensrepo for PG6102, Enterprise 2
 
 ## Nothing works, and I don't know why
 
-Hi Jason! 
-
 I got so far, but in the end, the tests defeated me. If I had another day or week, I'm sure I would've managed to get everything up and running.
 
 I've had a lot of issues with the different services not wanting to recognize the dependencies, and I've spend hours (and days) trying out different versions,
@@ -17,9 +15,15 @@ I got the integration tests against the database to work just fine, except for t
 
 I hope it's not too much of a hassle looking through the code to get an overview of how it works - I promise it 100% works 98% of the time! 
 
-I've attached the postman-collection, so you can give it a go with the best kind of testing - manual labor.
+I've attached the postman-collection, so you can give it a go with the best kind of testing - manual labor. It's the POSTMAN_COLLECTION_PG6102-exam-candidate1012.json document
 
 Merry Christmas! 
+
+## Known quirks
+- rabbitmq is currently running on localhost. If you want it to run on docker instead, change order-service and shipment-service's yml from localhost to rabbit-mq
+- tests don't work. the libraries just didn't want them to, I'm sorry
+- a lot of the code is written for demoing different skills, and are most likely not best practise in any way, shape, or form. 
+- 
 
 ## Criteria
 
