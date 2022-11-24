@@ -1,6 +1,7 @@
 package snr.student1012.orderservice.controller
 
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -12,6 +13,8 @@ import snr.student1012.orderservice.integration.PaymentIntegrationService
 import snr.student1012.orderservice.integration.RabbitSender
 import snr.student1012.orderservice.model.OrderEntity
 import snr.student1012.orderservice.service.OrderService
+import javax.ws.rs.PathParam
+import javax.ws.rs.QueryParam
 
 @RestController
 @RequestMapping("/api/order")
@@ -21,8 +24,13 @@ class OrderController(
     @Autowired private val rabbitSender: RabbitSender) {
 
     @GetMapping("")
-    fun getOrders() : ResponseEntity<List<OrderEntity>> {
+    fun getAllOrders() : ResponseEntity<List<OrderEntity>> {
         return ResponseEntity.ok().body(orderService.getOrders());
+    }
+
+    @GetMapping("/page/{page}")
+    fun getOrders(@PathVariable page: Int) : ResponseEntity<List<OrderEntity>> {
+        return ResponseEntity.ok().body(orderService.getOrders(page).toList());
     }
 
     @GetMapping("/{id}")

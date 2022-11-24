@@ -1,6 +1,8 @@
 package snr.student1012.shippingservice.service
 
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import snr.student1012.shippingservice.integration.RabbitSender
@@ -12,6 +14,10 @@ class ShipmentService (@Autowired private val shipmentRepo: ShipmentRepo, @Autow
 
     fun getShipments() : List<ShipmentEntity>{
         return shipmentRepo.findAll();
+    }
+
+    fun getShipments(page: Int) : Page<ShipmentEntity> {
+        return shipmentRepo.findAll(Pageable.ofSize(5).withPage(page));
     }
 
     fun getShipment(id: Long) : ShipmentEntity? {

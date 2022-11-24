@@ -6,6 +6,8 @@ spring:
     listener:
       simple:
         default-requeue-rejected: false
+  main:
+    web-application-type: reactive
   application:
     name: shipping-service
   flyway:

@@ -14,8 +14,12 @@ import snr.student1012.paymentservice.service.PaymentService
 class PaymentController(@Autowired private val paymentService: PaymentService) {
 
     @GetMapping("")
-    fun getPayments() : ResponseEntity<List<PaymentEntity>> {
+    fun getAllPayments() : ResponseEntity<List<PaymentEntity>> {
         return ResponseEntity.ok().body(paymentService.getPayments())
+    }
+    @GetMapping("/page/{page}")
+    fun getPayments(@PathVariable page: Int) : ResponseEntity<List<PaymentEntity>> {
+        return ResponseEntity.ok().body(paymentService.getPayment(page).toList())
     }
 
     @GetMapping("/{id}")

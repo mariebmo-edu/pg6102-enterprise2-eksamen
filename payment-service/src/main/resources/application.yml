@@ -3,6 +3,8 @@ server:
 spring:
   rabbitmq:
     host: localhost
+  main:
+    web-application-type: reactive
   application:
     name: payment-service
   flyway:

@@ -4,6 +4,7 @@ import org.json.JSONObject
 import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestMethodOrder
+import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -12,12 +13,13 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
+import snr.student1012.orderservice.integrationtest.extension.WireMockExtension
 
 
-@SpringBootTest()
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles("test")
+@ActiveProfiles("integrationtest")
+@ExtendWith(WireMockExtension::class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation::class)
 class OrderApiTest(@Autowired private val mockMvc: MockMvc) {
 

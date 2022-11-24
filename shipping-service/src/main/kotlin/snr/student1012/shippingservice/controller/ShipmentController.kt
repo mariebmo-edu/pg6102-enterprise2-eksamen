@@ -18,6 +18,11 @@ class ShipmentController(@Autowired private val shipmentService: ShipmentService
         return ResponseEntity.ok().body(shipmentService.getShipments());
     }
 
+    @GetMapping("/page/{page}")
+    fun getShipments(@PathVariable page: Int) : ResponseEntity<List<ShipmentEntity>>{
+        return ResponseEntity.ok().body(shipmentService.getShipments(page).toList());
+    }
+
     @GetMapping("/{id}")
     fun getShipmentById(@PathVariable id: Long?) : ResponseEntity<Any>{
         id?.let {
